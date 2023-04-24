@@ -19,20 +19,22 @@ export default {
             this.getMovies()
         },
         getMovies() {
-            axios.get('http://localhost:8000/api/movies', {
-                params: {
-                    title: this.title,
-                    page: this.page
-                }
-            })
-                .then((response) => {
-                    console.log('Index Film Cercati', response.data.Search);
-                    // this.movies = response.data.Search;
-                    this.movies = this.movies.concat(response.data.Search);
+            if (this.title != '') {
+                axios.get('http://localhost:8000/api/movies', {
+                    params: {
+                        title: this.title,
+                        page: this.page
+                    }
                 })
-                .catch((response) => {
-                    console.log('Errore Index Film Cercati', response);
-                })
+                    .then((response) => {
+                        console.log('Index Film Cercati', response.data.Search);
+                        // this.movies = response.data.Search;
+                        this.movies = this.movies.concat(response.data.Search);
+                    })
+                    .catch((response) => {
+                        console.log('Errore Index Film Cercati', response);
+                    })
+            }
         },
         loadMore() {
             this.page++
@@ -43,7 +45,6 @@ export default {
 </script>
 
 <template>
-
     <div class="container">
         <label for="searchTitle">Titolo</label>
         <input type="text" id="searchTitle" name="searchTitle" placeholder="Inserisci il titolo..." v-model="title">
@@ -55,7 +56,7 @@ export default {
             <h2>Titolo: {{ movie.Title }}</H2>
         </div>
     </div>
-    <button class="btn" @click="loadMore()">
+    <button class="btn" @click="loadMore()" v-if="this.movies.length > 0">
         Richiedi altri
     </button>
 </template>
