@@ -24,8 +24,8 @@ export default {
                 }
             })
                 .then((response) => {
-                    console.log('Index Film Cercati', response);
-                    this.movies = response;
+                    console.log('Index Film Cercati', response.data.Search);
+                    this.movies = response.data.Search;
                 })
                 .catch((response) => {
                     console.log('Errore Index Film Cercati', response);
@@ -45,7 +45,7 @@ export default {
 
     <div class="container" v-if="movies">
         <div class="card" v-for="movie in movies">
-            <h2>Titolo: {{ movie.title }}</H2>
+            <h2>Titolo: {{ movie.Title }}</H2>
         </div>
 
     </div>
