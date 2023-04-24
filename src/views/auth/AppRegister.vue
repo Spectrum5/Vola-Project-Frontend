@@ -26,6 +26,8 @@ export default {
     methods: {
         handleRegister() {
             this.validateData();
+            // Redirect to /search route
+            this.$router.push('/search');
         },
         addError(message, field) {
             // Controlla se in store.errors sono presenti errori con lo stesso campo di quello passato

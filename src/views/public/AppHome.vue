@@ -50,15 +50,32 @@ export default {
 </script>
 
 <template>
-    <button class="btn" @click="$router.push('/login')">
-        Login
-    </button>
-    <button class="btn" @click="$router.push('/register')">
-        Register
-    </button>
+    <div class="bg-container d-flex justify-content-center align-items-center">
+        <button class="btn rounded-pill m-3" @click="$router.push('/login')">
+            Login
+        </button>
+        <button class="btn rounded-pill m-3" @click="$router.push('/register')">
+            Register
+        </button>
+    </div>
 </template>
 
 <style lang="scss" scoped>
-@import '../../styles/partials/mixins.scss';
-@import '../../styles/partials/variables.scss';
+.bg-container {
+    background-image: url('../../../public/bg-film.jpg');
+    height: 100vh;
+    background-size: cover;
+
+    .btn {
+        margin-top: 1rem;
+        height: 3rem;
+        width: 10rem;
+        background: linear-gradient(135deg,
+                rgb(6, 7, 30) 0%,
+                rgb(240, 207, 163) 100%);
+        color: #fff;
+        border: none;
+        font-weight: bold;
+    }
+}
 </style>

@@ -23,6 +23,7 @@ export default {
     methods: {
         handleLogin() {
             this.validateData();
+            this.$router.push('/search');
         },
         addError(message, field) {
             // Controlla se in store.errors sono presenti errori con lo stesso campo di quello passato
