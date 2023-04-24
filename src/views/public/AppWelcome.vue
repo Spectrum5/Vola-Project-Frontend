@@ -20,8 +20,12 @@ export default {
 </script>
 
 <template>
-   
-    
+   <button class="btn" @click="$router.push('/login')">
+        Login
+   </button>
+   <button class="btn" @click="$router.push('/register')"> 
+        Register
+   </button>
 </template>
 
 <style lang="scss" scoped>

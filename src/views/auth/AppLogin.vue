@@ -1,10 +1,4 @@
 <script>
-
-// Components
-import AppLogo from '../../components/AppLogo.vue';
-import AppFooter from '../../components/AppFooter.vue';
-import AppErrorForm from '../../components/AppErrorForm.vue';
-
 // Utilities
 import { store } from '../../store';
 import { router } from '../../router';
@@ -15,9 +9,7 @@ axios.defaults.withCredentials = true;
 export default {
     name: 'AppLogin',
     components: {
-        AppLogo,
-        AppFooter,
-        AppErrorForm
+
     },
     data() {
         return {
@@ -144,7 +136,7 @@ export default {
 <template>
     <header>
         <div class="container">
-            <AppLogo />
+
         </div>
     </header>
 
@@ -180,7 +172,7 @@ export default {
         </div>
     </main>
 
-    <AppFooter />
+
 </template>
 
 <style lang="scss" scoped>

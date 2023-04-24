@@ -12,7 +12,8 @@ export default {
     },
     data() {
         return {
-            store
+            store,
+            router
         }
     },
     methods: {
@@ -21,6 +22,7 @@ export default {
                 .then((response) => {
                     console.log('User', response.data)
                     this.store.user = response.data;
+                    $router.push('search');
                 })
                 .catch((response) => {
                     console.log('Ottenimento user fallito');

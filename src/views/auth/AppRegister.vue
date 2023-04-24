@@ -1,10 +1,5 @@
 <script>
 
-// Components
-import AppLogo from '../../components/AppLogo.vue';
-import AppFooter from '../../components/AppFooter.vue';
-import AppErrorForm from '../../components/AppErrorForm.vue';
-
 // Utilities
 import { store } from '../../store';
 
@@ -14,9 +9,7 @@ axios.defaults.withCredentials = true;
 export default {
     name: 'AppRegister',
     components: {
-        AppLogo,
-        AppFooter,
-        AppErrorForm
+
     },
     data() {
         return {
@@ -145,32 +138,6 @@ export default {
                 passwordConfirmationInput.classList.add('invalid');
             }
         },
-        dateOfBirthValidation() {
-            let datOfBirthInput = document.getElementById('date_of_birth');
-            datOfBirthInput.classList.remove('invalid');
-
-            const [year, month, day] = datOfBirthInput.value.split('-');
-            const now = new Date();
-
-            if (datOfBirthInput.value == '' || datOfBirthInput.value == null) {
-                this.addError('Devi impostare una data di nascita', 'date_of_birth');
-                datOfBirthInput.classList.add('invalid');
-            }
-            else {
-                if ((now.getFullYear() - year) <= 9) {
-                    this.addError('Devi avere almeno 9 anni per poterti registrare', 'date_of_birth');
-                    datOfBirthInput.classList.add('invalid');
-                }
-                if (month < 1 || month > 12) {
-                    this.addError('Il mese deve essere compreso tra 1 e 12', 'date_of_birth');
-                    datOfBirthInput.classList.add('invalid');
-                }
-                if (day < 1 || day > 31) {
-                    this.addError('Il giorno di nascita deve essere compreso tra 1 e 31', 'date_of_birth');
-                    datOfBirthInput.classList.add('invalid');
-                }
-            }
-        },
         validateData() {
             // Front End Validation
             console.log('Validazione dati registrazione...');
@@ -181,7 +148,6 @@ export default {
             this.emailValidation();
             this.passwordValidation();
             this.passwordConfirmationValidation();
-            this.dateOfBirthValidation();
 
             // Controlla se validazione e' andata a buon fine
             if (this.store.errors.length == 0) this.postRegisterData();
@@ -221,7 +187,7 @@ export default {
 <template>
     <header>
         <div class="container">
-            <AppLogo />
+
         </div>
     </header>
 
@@ -271,15 +237,6 @@ export default {
                         </div>
                     </div>
 
-                    <!-- Date of Birth -->
-                    <div class="row">
-                        <div class="group large">
-                            <label for="date_of_birth">data di nascita *</label>
-                            <input type="date" id="date_of_birth" name="date_of_birth" v-model="form.date_of_birth"
-                                v-on:blur="dateOfBirthValidation()">
-                        </div>
-                    </div>
-
                     <div class="row">
                         <button class="btn">registrati</button>
                     </div>
@@ -291,7 +248,7 @@ export default {
         </div>
     </main>
 
-    <AppFooter />
+
 </template>
 
 <style lang="scss" scoped>

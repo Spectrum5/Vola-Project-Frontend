@@ -9,36 +9,26 @@ export default {
     data() {
         return {
             router,
-            currentPage: 1,
-            apartments: []
         }
     },
     methods: {
-        getApartments() {
-            axios.get('http://localhost:8000/api/apartments', {
+        handleSearch() {
+            this.getMovies()
+        },
+        getMovies() {
+            axios.get('http://localhost:8000/api/movies', {
                 params: {
                     title: this.$route.params.title,
-                    page: this.currentPage,
                 }
             })
                 .then((response) => {
-                    console.log('Index Appartamenti Cercati', response.data);
-                    this.apartments = this.apartments.concat(response.data.apartments);
+                    console.log('Index Film Cercati', response.data);
+                    this.movies = this.movies.concat(response.data.movies);
                 })
                 .catch((response) => {
-                    console.log('Errore Index Appartamenti Cercati', response.data);
+                    console.log('Errore Index Film Cercati', response.data);
                 })
         },
-        loadMore() {
-            this.currentPage++;
-            this.getApartments();
-        }
-    },
-    mounted() {
-        this.getApartments();
-        console.log('searchTitle', this.$route.params.title);
-    },
-    computed: {
     }
 }
 </script>
@@ -51,15 +41,12 @@ export default {
         <button @click="handleSearch()">Cerca</button>
     </div>
 
-    <div class="container">
-
-        <div class="card" v-for="apartment in apartments" @click="$router.push(`/apartments/${apartment.slug}`)">
-            <h2>Titolo: {{ apartment.title }}</H2>
-            <p>Descrizione: {{ apartment.description }}</p>
+    <div class="container" v-if="movies">
+        <div class="card" v-for="movie in movies">
+            <h2>Titolo: {{ movie.title }}</H2>
         </div>
 
     </div>
-    <button @click="loadMore()">LOAD MORE</button>
 </template>
 
 <style lang="scss" scoped>
