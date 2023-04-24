@@ -3,7 +3,7 @@ import { store } from './store';
 
 // Public Pages
 
-import AppWelcome from './views/public/AppWelcome.vue';
+import AppHome from './views/public/AppHome.vue';
 import HomeSearch from './views/pages/HomeSearch.vue';
 
 // Authentication Pages
@@ -17,8 +17,8 @@ const router = createRouter({
         // Public Pages
         {
             path: '/',
-            name: 'Welcome',
-            component: AppWelcome
+            name: 'home',
+            component: AppHome
         },
         // Authentication Pages
         {

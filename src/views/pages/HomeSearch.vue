@@ -72,6 +72,21 @@ export default {
         loadMore() {
             this.page++
             this.getMovies()
+        },
+        handleLogout() {
+            axios.post('http://localhost:8000/logout')
+                .then(response => {
+                    // Reset user in store
+                    if (this.$store && this.$store.state.user) {
+                        this.$store.state.user = null;
+                    }
+                    // Redirect to login page
+                    this.$router.push('/login');
+                    console.log('Logged Out');
+                })
+                .catch(error => {
+                    console.log('Error logging out:', error);
+                });
         }
     }
 }
@@ -83,7 +98,7 @@ export default {
         <input type="text" id="searchTitle" name="searchTitle" placeholder="Inserisci il titolo..." v-model="title">
         <button @click="handleSearch()">Cerca</button>
     </div>
-    <div class="container"  v-if="title.length <= 0">
+    <div class="container" v-if="title.length <= 0">
         <label for="searchId">ID</label>
         <input type="text" id="searchId" name="searchId" placeholder="Inserisci ID..." v-model="id">
         <button @click="getMovie()">Cerca</button>
@@ -101,6 +116,7 @@ export default {
     <button class="btn" @click="loadMore()" v-if="this.movies.length > 0">
         Richiedi altri
     </button>
+    <button @click="handleLogout()">logout</button>
 </template>
 
 <style lang="scss" scoped>
