@@ -9,6 +9,8 @@ export default {
     data() {
         return {
             router,
+            title: '',
+            movies: []
         }
     },
     methods: {
@@ -18,15 +20,15 @@ export default {
         getMovies() {
             axios.get('http://localhost:8000/api/movies', {
                 params: {
-                    title: this.$route.params.title,
+                    title: this.title,
                 }
             })
                 .then((response) => {
-                    console.log('Index Film Cercati', response.data);
-                    this.movies = this.movies.concat(response.data.movies);
+                    console.log('Index Film Cercati', response);
+                    this.movies = response;
                 })
                 .catch((response) => {
-                    console.log('Errore Index Film Cercati', response.data);
+                    console.log('Errore Index Film Cercati', response);
                 })
         },
     }
@@ -37,7 +39,7 @@ export default {
 
     <div class="container">
         <label for="searchTitle">Titolo</label>
-        <input type="text" id="searchTitle" name="searchTitle" placeholder="Inserisci il titolo...">
+        <input type="text" id="searchTitle" name="searchTitle" placeholder="Inserisci il titolo..." v-model="title">
         <button @click="handleSearch()">Cerca</button>
     </div>
 
