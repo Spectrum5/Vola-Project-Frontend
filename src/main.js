@@ -1,7 +1,16 @@
 import { createApp } from 'vue'
-// Nel caso in cui volessimo usare SASS, è consigliabile rimuovere l'importazione del file style.css da qui (e cancellarlo eventualmente)
-// Non è obbligatorio, ma potremmo creare inutili conflitti
-// import './style.css'
 import App from './App.vue'
+import { router } from './router'
 
-createApp(App).mount('#app')
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+/* import specific icons */
+import { faBars } from '@fortawesome/free-solid-svg-icons'
+
+library.add(faBars)
+
+createApp(App)
+  .use(router)
+  .component('font-awesome-icon', FontAwesomeIcon)
+  .mount('#app')
