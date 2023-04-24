@@ -127,7 +127,7 @@ export default {
         }
     },
     mounted() {
-        document.title = 'Boolbnb | Login';
+        document.title = 'Vola | Login';
         this.store.errors = [];
     }
 }

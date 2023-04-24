@@ -16,6 +16,10 @@ export default {
     methods: {
         
     },
+    mounted() {
+        document.title = 'Vola | Welcome';
+        this.store.errors = [];
+    }
 }
 </script>
 

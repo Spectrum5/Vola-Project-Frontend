@@ -178,7 +178,7 @@ export default {
         }
     },
     mounted() {
-        document.title = 'Boolbnb | Register';
+        document.title = 'Vola | Register';
         this.store.errors = [];
     }
 }
