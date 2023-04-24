@@ -10,7 +10,8 @@ export default {
         return {
             router,
             title: '',
-            movies: []
+            movies: [],
+            page: 1
         }
     },
     methods: {
@@ -21,16 +22,22 @@ export default {
             axios.get('http://localhost:8000/api/movies', {
                 params: {
                     title: this.title,
+                    page: this.page
                 }
             })
                 .then((response) => {
                     console.log('Index Film Cercati', response.data.Search);
-                    this.movies = response.data.Search;
+                    // this.movies = response.data.Search;
+                    this.movies = this.movies.concat(response.data.Search);
                 })
                 .catch((response) => {
                     console.log('Errore Index Film Cercati', response);
                 })
         },
+        loadMore() {
+            this.page++
+            this.getMovies()
+        }
     }
 }
 </script>
@@ -47,8 +54,10 @@ export default {
         <div class="card" v-for="movie in movies">
             <h2>Titolo: {{ movie.Title }}</H2>
         </div>
-
     </div>
+    <button class="btn" @click="loadMore()">
+        Richiedi altri
+    </button>
 </template>
 
 <style lang="scss" scoped>
