@@ -2,6 +2,7 @@
 // Utilities
 import { store } from '../../store';
 import { router } from '../../router';
+import AppErrorForm from '../../components/AppErrorForm.vue';
 
 import axios from 'axios';
 axios.defaults.withCredentials = true;
@@ -9,7 +10,7 @@ axios.defaults.withCredentials = true;
 export default {
     name: 'AppLogin',
     components: {
-
+        AppErrorForm
     },
     data() {
         return {
@@ -159,7 +160,7 @@ export default {
                     <div class="row">
                         <button class="btn">login</button>
                     </div>
-                    <!-- <AppErrorForm v-if="store.errors.length > 0" /> -->
+                    <AppErrorForm v-if="store.errors.length > 0" />
                 </form>
                 <router-link to="/register" class="customLink">Non hai un account? Creane uno.</router-link>
                 <p class="campi-required">I campi contrassegnati con * sono obbligatori</p>
