@@ -23,7 +23,7 @@ export default {
     methods: {
         handleLogin() {
             this.validateData();
-            this.$router.push('/search');
+
         },
         addError(message, field) {
             // Controlla se in store.errors sono presenti errori con lo stesso campo di quello passato
@@ -135,12 +135,6 @@ export default {
 </script>
 
 <template>
-    <header>
-        <div class="container">
-
-        </div>
-    </header>
-
     <main>
         <div class="container">
             <div class="formContainer">
@@ -165,7 +159,7 @@ export default {
                     <div class="row">
                         <button class="btn">login</button>
                     </div>
-                    <AppErrorForm v-if="store.errors.length > 0" />
+                    <!-- <AppErrorForm v-if="store.errors.length > 0" /> -->
                 </form>
                 <router-link to="/register" class="customLink">Non hai un account? Creane uno.</router-link>
                 <p class="campi-required">I campi contrassegnati con * sono obbligatori</p>
@@ -186,27 +180,5 @@ export default {
     font-weight: 600;
     font-family: 'Poppins', sans-serif;
     padding: 0.5rem;
-    // border: none;
-    // background: none;
-}
-
-.container {
-    @include largeContainer;
-    @include flexRowCenter;
-    padding: 0 1rem;
-}
-
-header {
-    padding: 1rem 0;
-}
-
-main {
-    height: 100vh;
-}
-
-.campi-required {
-    font-size: 0.75rem;
-    margin-top: 1rem;
-    font-style: italic;
 }
 </style>

@@ -22,7 +22,7 @@ export default {
                 .then((response) => {
                     console.log('User', response.data)
                     this.store.user = response.data;
-                    $router.push('search');
+                    router.push('/search');
                 })
                 .catch((response) => {
                     console.log('Ottenimento user fallito');

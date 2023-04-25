@@ -2,6 +2,7 @@
 // Utilities
 import axios from 'axios';
 import { router } from '../../router';
+import { store } from '../../store';
 
 export default {
     name: 'HomeSearch',
@@ -13,7 +14,8 @@ export default {
             page: 1,
             oldTitle: '',
             id: '',
-            movie: null
+            movie: null,
+            store
         }
     },
     methods: {
@@ -67,11 +69,11 @@ export default {
             axios.post('http://localhost:8000/logout')
                 .then(response => {
                     // Reset user in store
-                    if (this.$store && this.$store.state.user) {
-                        this.$store.state.user = null;
-                    }
+
+                    this.store.user = null;
+
                     // Redirect to login page
-                    this.$router.push('/login');
+                    this.$router.push('/');
                     console.log('Logged Out');
                 })
                 .catch(error => {

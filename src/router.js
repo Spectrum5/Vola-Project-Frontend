@@ -40,7 +40,10 @@ const router = createRouter({
         {
             path: '/search',
             name: 'search',
-            component: HomeSearch
+            component: HomeSearch,
+            beforeEnter: (to, from) => {
+                if (store.user == null) return { name: 'login' }
+            },
         },
     ]
 });
