@@ -83,40 +83,49 @@ export default {
 </script>
 
 <template>
-    <div class="container" v-if="id.length <= 0">
-        <label for="searchTitle">Titolo</label>
-        <input type="text" id="searchTitle" name="searchTitle" placeholder="Inserisci il titolo..." v-model="title">
-        <button @click="handleSearch()">Cerca</button>
-    </div>
-    <div class="container" v-if="title.length <= 0">
-        <label for="searchId">ID</label>
-        <input type="text" id="searchId" name="searchId" placeholder="Inserisci ID..." v-model="id">
-        <button @click="getMovie()">Cerca</button>
-    </div>
-    <div class="container" v-if="movies">
-        <div class="card" v-for="movie in movies" :key="movie.imdbID">
-            <img :src="movie.Poster" alt="Poster del film" class="card-img-top">
-            <div class="card-body">
-                <h2 class="card-title">{{ movie.Title }}</h2>
-                <p class="card-text card-year">{{ movie.Year }}</p>
-                <p class="card-text card-plot">{{ movie.Plot }}</p>
+    <div class="bg-search">
+        <div class="container">
+            <div v-if="id.length <= 0">
+                <label for="searchTitle" class="text-white"></label>
+                <input type="text" id="searchTitle" name="searchTitle" placeholder="Inserisci il titolo..." v-model="title">
+                <button @click="handleSearch()">Cerca</button>
             </div>
+            <div v-if="title.length <= 0">
+                <label for="searchId"></label>
+                <input type="text" id="searchId" name="searchId" placeholder="Inserisci ID..." v-model="id">
+                <button @click="getMovie()">Cerca</button>
+            </div>
+            <button @click="handleLogout()">logout</button>
+            <div class="container" v-if="movies">
+                <div class="card" v-for="movie in movies" :key="movie.imdbID">
+                    <img :src="movie.Poster" alt="Poster del film" class="card-img-top">
+                    <div class="card-body">
+                        <h2 class="card-title">{{ movie.Title }}</h2>
+                        <p class="card-text card-year">{{ movie.Year }}</p>
+                        <div v-if="movie === selectedMovie">
+                            <p class="card-text card-plot">{{ movie.Plot }}</p>
+                        </div>
+                        <div v-else>
+                            <p class="card-text"><a href="#" @click="selectMovie(movie)">Leggi di più</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container" v-if="movie">
+                <div class="card">
+                    <img :src="movie.Poster" alt="Poster del film" class="card-img-top">
+                    <div class="card-body">
+                        <h2 class="card-title">{{ movie.Title }}</h2>
+                        <p class="card-text card-year">{{ movie.Year }}</p>
+                        <p class="card-text card-plot">{{ movie.Plot }}</p>
+                    </div>
+                </div>
+            </div>
+            <button class="btn" @click="loadMore()" v-if="this.movies.length > 0">
+                Richiedi altri
+            </button>
         </div>
     </div>
-    <div class="container" v-if="movie">
-        <div class="card">
-            <img :src="movie.Poster" alt="Poster del film" class="card-img-top">
-            <div class="card-body">
-                <h2 class="card-title">{{ movie.Title }}</h2>
-                <p class="card-text card-year">{{ movie.Year }}</p>
-                <p class="card-text card-plot">{{ movie.Plot }}</p>
-            </div>
-        </div>
-    </div>
-    <button class="btn" @click="loadMore()" v-if="this.movies.length > 0">
-        Richiedi altri
-    </button>
-    <button @click="handleLogout()">logout</button>
 </template>
 
 <style lang="scss" scoped>
@@ -130,6 +139,7 @@ h2 {
     align-items: center;
     flex-wrap: wrap;
     gap: 1.5rem;
+    padding-top: 50px;
 }
 
 .card {
@@ -183,5 +193,34 @@ h2 {
             margin-top: 10px;
         }
     }
+}
+
+input[type="text"] {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #555;
+}
+
+.bg-search {
+    background-image: url('../../../../bg-film.jpg');
+    background-size: cover;
+    height: 100vh;
+    background-attachment: fixed;
+    overflow-y: scroll;
 }
 </style>

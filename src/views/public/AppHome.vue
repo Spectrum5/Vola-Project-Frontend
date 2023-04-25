@@ -70,14 +70,19 @@ export default {
 
 <style lang="scss" scoped>
 .bg-container {
-    background-image: url('../../../public/bg-film.jpg');
+    background-image: url('../../../bg-film.jpg');
     height: 100vh;
     background-size: cover;
 
+    h1 {
+        font-size: 4rem;
+        margin-bottom: 10px;
+    }
+
     .btn {
         margin-top: 1rem;
-        height: 3rem;
-        width: 10rem;
+        height: 5rem;
+        width: 15rem;
         background: linear-gradient(135deg,
                 rgb(6, 7, 30) 0%,
                 rgb(240, 207, 163) 100%);
@@ -85,6 +90,7 @@ export default {
         border: none;
         font-weight: bold;
         transition: transform 250ms;
+        font-size: 2rem;
 
         &:hover {
             transform: translateY(-10px);
