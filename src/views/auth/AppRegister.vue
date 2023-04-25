@@ -262,5 +262,9 @@ export default {
     font-weight: 600;
     font-family: 'Poppins', sans-serif;
     padding: 0.5rem;
+    &:hover {
+        background-color: rgb(123, 169, 215);
+        color: white;
+    }
 }
 </style>
