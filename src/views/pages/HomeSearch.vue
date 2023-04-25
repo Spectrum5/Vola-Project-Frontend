@@ -21,6 +21,7 @@ export default {
     methods: {
         handleSearch() {
             this.movies = []; // svuota l'array movies
+            this.movie = null; // cancella la card del film cercato precedentemente
             this.getMovies();
         },
         getMovies() {
@@ -62,7 +63,6 @@ export default {
             this.page++;
             this.getMovies().then(() => {
                 // Aggiungi i nuovi film a quelli già presenti
-                // No need to clean the movies array, we're just appending to it
             });
         },
         handleLogout() {
@@ -104,12 +104,7 @@ export default {
                     <div class="card-body">
                         <h2 class="card-title">{{ movie.Title }}</h2>
                         <p class="card-text card-year">{{ movie.Year }}</p>
-                        <div v-if="movie === selectedMovie">
-                            <p class="card-text card-plot">{{ movie.Plot }}</p>
-                        </div>
-                        <div v-else>
-                            <p class="card-text"><a href="#" @click="selectMovie(movie)">Leggi di più</a></p>
-                        </div>
+                        <p class="card-text card-imdbID">ID: {{ movie.imdbID }}</p>
                     </div>
                 </div>
             </div>
@@ -131,66 +126,56 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-h2 {
-    font-size: 1rem;
-}
+.bg-search {
+    background-image: url('../../../../bg-film.jpg');
+    background-size: cover;
+    height: 100vh;
+    background-attachment: fixed;
+    overflow-y: scroll;
 
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-    padding-top: 50px;
-}
-
-.card {
-    width: 250px;
-    height: 440px;
-    border: 1px solid #e6e6e6;
-    border-radius: 5px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    transition: transform 250ms;
-
-    &:hover {
-        transform: translateY(-10px);
-    }
-
-    .card-img-top {
-        width: 100%;
-        height: 70%;
-        object-fit: cover;
-    }
-
-    .card-body {
+    .container {
         display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        padding: 10px;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        padding-top: 10px;
 
-        p {
-            font-size: 0.8rem;
 
-        }
+        .card {
+            width: 400px;
+            min-height: 500px;
+            border: 1px solid #e6e6e6;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 250ms;
 
-        .card-text:first-of-type {
-            margin-bottom: 5px;
-            color: #666;
-        }
+            &:hover {
+                transform: translateY(-10px);
+            }
 
-        .card-text:last-of-type {
-            margin-top: 10px;
-        }
+            .card-img-top {
+                width: 100%;
+                height: 70%;
+                object-fit: fill;
+            }
 
-        .card-year {
-            margin-bottom: 5px;
-            color: #666;
-        }
+            .card-body {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                padding: 10px;
 
-        .card-plot {
-            margin-top: 10px;
+                .card-text:first-of-type {
+                    color: #666;
+                }
+            }
+
+            h2 {
+                font-size: 1rem;
+            }
         }
     }
 }
@@ -214,13 +199,6 @@ button {
 
 button:hover {
     background-color: #555;
-}
-
-.bg-search {
-    background-image: url('../../../../bg-film.jpg');
-    background-size: cover;
-    height: 100vh;
-    background-attachment: fixed;
-    overflow-y: scroll;
+    color: rgb(244, 192, 125);
 }
 </style>
