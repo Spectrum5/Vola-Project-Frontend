@@ -1,35 +1,38 @@
 <script>
-// Utilities
-import axios from 'axios';
-import { router } from '../../router';
-import { store } from '../../store';
+// utilities
+import axios from 'axios'; 
+import { router } from '../../router'; 
+import { store } from '../../store'; 
 
+// Definizione della componente Vue.js
 export default {
     name: 'HomeSearch',
     data() {
         return {
-            router,
-            title: '',
-            movies: [],
-            page: 1,
-            oldTitle: '',
-            id: '',
-            movie: null,
-            store
+            router, 
+            title: '', 
+            movies: [], 
+            page: 1, 
+            oldTitle: '', 
+            id: '', 
+            movie: null, 
+            store 
         }
     },
     methods: {
+        // Funzione per gestire la ricerca di film tramite titolo
         handleSearch() {
-            this.movies = []; // svuota l'array movies
-            this.movie = null; // cancella la card del film cercato precedentemente
-            this.getMovies();
+            this.movies = []; // Svuota la lista di film
+            this.getMovies(); // Effettua la ricerca dei film
         },
+
+        // Funzione per effettuare la chiamata HTTP per recuperare i film tramite titolo
         getMovies() {
             if (this.title != '' && this.page > 0) {
                 return axios.get('http://localhost:8000/api/movies', {
                     params: {
                         title: this.title,
-                        page: this.page
+                        page: this.page 
                     }
                 })
                     .then((response) => {
@@ -39,10 +42,12 @@ export default {
                         this.movies = this.movies.concat(response.data.Search);
                     })
                     .catch((response) => {
-                        console.log('Errore Index Film Cercati', response);
+                        console.log('Errore Index Film Cercati', response); 
                     })
             }
         },
+
+        // Funzione per effettuare la chiamata HTTP per recuperare i dettagli del film tramite ID
         getMovie() {
             axios.get('http://localhost:8000/api/movies', {
                 params: {
@@ -59,20 +64,24 @@ export default {
                     console.log('Errore Index ID Cercati', response);
                 })
         },
+
+        // Funzione per caricare altri film tramite paginazione
         loadMore() {
-            this.page++;
+            this.page++; // Incrementa il numero di pagina dei risultati
             this.getMovies().then(() => {
                 // Aggiungi i nuovi film a quelli già presenti
             });
         },
+
+        // Funzione per gestire il logout dell'utente
         handleLogout() {
-            axios.post('http://localhost:8000/logout')
+            axios.post('http://localhost:8000/logout') // Effettua una chiamata POST per effettuare il logout
                 .then(response => {
-                    // Reset user in store
+                    // Resetta l'utente nello store
 
                     this.store.user = null;
 
-                    // Redirect to login page
+                    // Reindirizza alla pagina di home
                     this.$router.push('/');
                     console.log('Logged Out');
                 })
@@ -87,18 +96,28 @@ export default {
 <template>
     <div class="bg-search">
         <div class="container">
+
+            <!-- Form di ricerca per ID del film -->
             <div v-if="id.length <= 0">
                 <label for="searchTitle" class="text-white"></label>
                 <input type="text" id="searchTitle" name="searchTitle" placeholder="Inserisci il titolo..." v-model="title">
                 <button @click="handleSearch()">Cerca</button>
             </div>
+
+            <!-- Form di ricerca per titolo del film -->
             <div v-if="title.length <= 0">
                 <label for="searchId"></label>
                 <input type="text" id="searchId" name="searchId" placeholder="Inserisci ID..." v-model="id">
                 <button @click="getMovie()">Cerca</button>
             </div>
+
+            <!-- Bottone per effettuare il logout -->
             <button @click="handleLogout()">logout</button>
+
+            <!-- Sezione di visualizzazione dei risultati di ricerca per titolo del film -->
             <div class="container" v-if="movies">
+
+                <!-- Card per ogni film trovato -->
                 <div class="card" v-for="movie in movies" :key="movie.imdbID">
                     <img :src="movie.Poster" alt="Poster del film" class="card-img-top">
                     <div class="card-body">
@@ -108,7 +127,11 @@ export default {
                     </div>
                 </div>
             </div>
+
+            <!-- Sezione di visualizzazione dei risultati di ricerca per ID del film -->
             <div class="container" v-if="movie">
+
+                <!-- Card per il film trovato -->
                 <div class="card">
                     <img :src="movie.Poster" alt="Poster del film" class="card-img-top">
                     <div class="card-body">
@@ -118,6 +141,8 @@ export default {
                     </div>
                 </div>
             </div>
+
+            <!-- Bottone per richiedere altri risultati -->
             <button class="btn" @click="loadMore()" v-if="this.movies.length > 0">
                 Richiedi altri
             </button>
