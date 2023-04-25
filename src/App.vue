@@ -4,6 +4,7 @@
 import { store } from './store';
 import { router } from './router';
 import axios from 'axios';
+// Impostiamo Axios in modo che invii i cookie con le richieste
 axios.defaults.withCredentials = true;
 
 export default {
