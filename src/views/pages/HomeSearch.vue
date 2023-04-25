@@ -144,13 +144,17 @@ h2 {
 
 .card {
     width: 250px;
-    height: 450px;
+    height: 440px;
     border: 1px solid #e6e6e6;
     border-radius: 5px;
-    overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    transition: transform 250ms;
+
+    &:hover {
+        transform: translateY(-10px);
+    }
 
     .card-img-top {
         width: 100%;
@@ -164,15 +168,9 @@ h2 {
         justify-content: space-between;
         padding: 10px;
 
-        h2 {
-            font-size: 1rem;
-            margin-bottom: 10px;
-        }
-
         p {
             font-size: 0.8rem;
-            margin: 0;
-            line-height: 1.2;
+
         }
 
         .card-text:first-of-type {
