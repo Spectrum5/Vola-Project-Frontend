@@ -1,5 +1,4 @@
 <script>
-
 // Utilities
 import axios from 'axios';
 import { router } from '../../router';
@@ -19,11 +18,12 @@ export default {
     },
     methods: {
         handleSearch() {
-            this.getMovies()
+            this.movies = []; // svuota l'array movies
+            this.getMovies();
         },
         getMovies() {
             if (this.title != '' && this.page > 0) {
-                axios.get('http://localhost:8000/api/movies', {
+                return axios.get('http://localhost:8000/api/movies', {
                     params: {
                         title: this.title,
                         page: this.page
@@ -32,21 +32,8 @@ export default {
                     .then((response) => {
                         console.log('Index Film Cercati', response.data.Search);
 
-                        // if (this.oldTitle == this.title || this.page == 1) {
-                        //     // niente
-                        // }
-                        // else if (this.oldTitle != this.title && this.page > 1) {
-                        //     // Niente
-                        // }
-
-                        // else if (this.oldTitle == this.title && this.page > 1) {
+                        // Aggiunge i nuovi risultati alla variabile movies
                         this.movies = this.movies.concat(response.data.Search);
-                        // }
-
-                        // else if (this.oldTitle != this.title && this.page == 1) {
-                        //     this.movies = response.data.Search;
-                        // }
-                        // this.oldTitle = this.title
                     })
                     .catch((response) => {
                         console.log('Errore Index Film Cercati', response);
@@ -70,8 +57,11 @@ export default {
                 })
         },
         loadMore() {
-            this.page++
-            this.getMovies()
+            this.page++;
+            this.getMovies().then(() => {
+                // Aggiungi i nuovi film a quelli già presenti
+                // No need to clean the movies array, we're just appending to it
+            });
         },
         handleLogout() {
             axios.post('http://localhost:8000/logout')
@@ -104,13 +94,23 @@ export default {
         <button @click="getMovie()">Cerca</button>
     </div>
     <div class="container" v-if="movies">
-        <div class="card" v-for="movie in movies">
-            <h2>Titolo: {{ movie.Title }}</H2>
+        <div class="card" v-for="movie in movies" :key="movie.imdbID">
+            <img :src="movie.Poster" alt="Poster del film" class="card-img-top">
+            <div class="card-body">
+                <h2 class="card-title">{{ movie.Title }}</h2>
+                <p class="card-text card-year">{{ movie.Year }}</p>
+                <p class="card-text card-plot">{{ movie.Plot }}</p>
+            </div>
         </div>
     </div>
     <div class="container" v-if="movie">
         <div class="card">
-            <h2>Titolo: {{ movie.Title }}</H2>
+            <img :src="movie.Poster" alt="Poster del film" class="card-img-top">
+            <div class="card-body">
+                <h2 class="card-title">{{ movie.Title }}</h2>
+                <p class="card-text card-year">{{ movie.Year }}</p>
+                <p class="card-text card-plot">{{ movie.Plot }}</p>
+            </div>
         </div>
     </div>
     <button class="btn" @click="loadMore()" v-if="this.movies.length > 0">
@@ -130,13 +130,58 @@ h2 {
     align-items: center;
     flex-wrap: wrap;
     gap: 1.5rem;
-
-    font-size: 0.8rem;
 }
 
 .card {
-    width: 200px;
-    padding: 1rem;
-    border: 2px solid lightblue;
+    width: 250px;
+    height: 450px;
+    border: 1px solid #e6e6e6;
+    border-radius: 5px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .card-img-top {
+        width: 100%;
+        height: 70%;
+        object-fit: cover;
+    }
+
+    .card-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 10px;
+
+        h2 {
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 0.8rem;
+            margin: 0;
+            line-height: 1.2;
+        }
+
+        .card-text:first-of-type {
+            margin-bottom: 5px;
+            color: #666;
+        }
+
+        .card-text:last-of-type {
+            margin-top: 10px;
+        }
+
+        .card-year {
+            margin-bottom: 5px;
+            color: #666;
+        }
+
+        .card-plot {
+            margin-top: 10px;
+        }
+    }
 }
 </style>
