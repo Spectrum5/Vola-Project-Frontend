@@ -50,13 +50,21 @@ export default {
 </script>
 
 <template>
-    <div class="bg-container d-flex justify-content-center align-items-center">
-        <button class="btn rounded-pill m-3" @click="$router.push('/login')">
-            Login
-        </button>
-        <button class="btn rounded-pill m-3" @click="$router.push('/register')">
-            Register
-        </button>
+    <div class="bg-container d-flex justify-content-center align-items-center flex-column text-white">
+        <div class="info">
+            <h1>
+                Film, serie TV e tanto altro. Senza limiti.
+            </h1>
+        </div>
+        <div class="button-home">
+            <button class="btn rounded-pill m-3" @click="$router.push('/login')">
+                Login
+            </button>
+            <button class="btn rounded-pill m-3" @click="$router.push('/register')">
+                Register
+            </button>
+        </div>
+
     </div>
 </template>
 
@@ -76,6 +84,15 @@ export default {
         color: #fff;
         border: none;
         font-weight: bold;
+        transition: transform 250ms;
+
+        &:hover {
+            transform: translateY(-10px);
+            box-shadow: 0px 10px 20px rgba(255, 0, 0, 0.4);
+            color: black;
+        }
     }
+
+
 }
 </style>
