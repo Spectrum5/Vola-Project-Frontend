@@ -23,6 +23,7 @@ export default {
         // Funzione per gestire la ricerca di film tramite titolo
         handleSearch() {
             this.movies = []; // Svuota la lista di film
+            this.movie = null;
             this.getMovies(); // Effettua la ricerca dei film
         },
 
@@ -56,7 +57,8 @@ export default {
             })
                 .then((response) => {
                     console.log('Index ID Cercati', response.data);
-
+                    this.movie = null;
+                    this.movies = [];
                     this.movie = response.data;
 
                 })
